@@ -24,6 +24,18 @@ const FileForm = ({ setData }) => {
 
   const parseCSVFile = (file) => {
     const onComplete = (results) => {
+      console.log(results);
+      const data = [];
+      results.data.forEach((row) => {
+        data.push({
+          'Date': row[results.meta.fields[0]],
+          'Temperature': row[results.meta.fields[1]].split(',')[0]
+        });
+      });
+      results.data = data;
+      results.meta.name = results.meta.fields[1];
+      results.meta.timezone = results.meta.fields[0].split(' ')[1];
+      results.meta.fields = ['Date', 'Temperature'];
       setData(results);
     };
 
@@ -36,7 +48,9 @@ const FileForm = ({ setData }) => {
       error: onError,
       header: true,
       dynamicTyping: true,
-      worker: true
+      worker: true,
+      delimiter: ';',
+      skipEmptyLines: 'greedy'
     };
 
     Papa.parse(file, cfg);
