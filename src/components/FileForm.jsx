@@ -26,10 +26,11 @@ const FileForm = ({ setData }) => {
     const onComplete = (results) => {
       console.log(results);
       const data = [];
-      results.data.forEach((row) => {
+      results.data.forEach((row, idx) => {
         data.push({
           'Date': row[results.meta.fields[0]],
-          'Temperature': row[results.meta.fields[1]].split(',')[0]
+          'Temperature': row[results.meta.fields[1]].split(',')[0],
+          'id': idx
         });
       });
       results.data = data;
