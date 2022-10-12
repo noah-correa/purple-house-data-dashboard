@@ -20,13 +20,11 @@
   </ol>
 </details>
 
-<hr>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 Simple React web application which allows a user to upload a CSV file containing temperature data to analyse and visualise.
 
-<hr>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -62,14 +60,12 @@ npm start
 Refer to <a href="#react-app-instructions">React App Instructions</a> for further details on running the application.
 
 
-<hr>
 
 <!-- LICENSE -->
 ## License
 
 Distributed under the Apache License. See `LICENSE.txt` for more information.
 
-<hr>
 
 ## React App Instructions
 
