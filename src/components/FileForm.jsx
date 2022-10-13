@@ -24,19 +24,25 @@ const FileForm = ({ setData }) => {
 
   const parseCSVFile = (file) => {
     const onComplete = (results) => {
-      console.log(results);
+      // console.log(results);
       const data = [];
       results.data.forEach((row, idx) => {
+        // const datetime = row[results.meta.fields[0]].split(' ');
+        const date = new Date(row[results.meta.fields[0]]);
+        // console.log(date);
         data.push({
-          'Date': row[results.meta.fields[0]],
-          'Temperature': row[results.meta.fields[1]].split(',')[0],
-          'id': idx
+          // 'Date': row[results.meta.fields[0]].replace(datetime[datetime.length-1], ''),
+          // 'Time': datetime[datetime.length - 1],
+          'date': date.toDateString(),
+          'time': date.toLocaleTimeString(),
+          'temp': row[results.meta.fields[1]].split(',')[0],
+          'id': results.data.length - idx
         });
       });
       results.data = data;
       results.meta.name = results.meta.fields[1];
       results.meta.timezone = results.meta.fields[0].split(' ')[1];
-      results.meta.fields = ['Date', 'Temperature'];
+      results.meta.fields = ['Date', 'Time', 'Temperature'];
       setData(results);
     };
 
