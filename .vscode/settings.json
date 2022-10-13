@@ -1,10 +1,14 @@
 {
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": true,
+        "source.sortImports": true
       },
       "eslint.validate": [
         "javascript"
       ],
     "editor.detectIndentation": false,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "[css]": {
+      "editor.suggest.insertMode": "replace"
+    }
 }
