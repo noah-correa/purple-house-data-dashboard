@@ -1,4 +1,6 @@
 import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
@@ -39,6 +41,9 @@ const Home = () => {
           <Button variant="outlined" onClick={() => resetCSV()}>
             Load a new CSV file
           </Button>
+          <Divider>
+            <Chip label={`Sensor: ${data.meta.name}`} />
+          </Divider>
           <ToggleButtonGroup exclusive fullWidth value={display} onChange={handleDisplay}>
             <ToggleButton value='table'>Table</ToggleButton>
             <ToggleButton value='graph'>Graph</ToggleButton>

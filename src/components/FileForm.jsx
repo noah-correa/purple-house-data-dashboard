@@ -27,14 +27,12 @@ const FileForm = ({ setData }) => {
       // console.log(results);
       const data = [];
       results.data.forEach((row, idx) => {
-        // const datetime = row[results.meta.fields[0]].split(' ');
         const date = new Date(row[results.meta.fields[0]]);
-        // console.log(date);
         data.push({
-          // 'Date': row[results.meta.fields[0]].replace(datetime[datetime.length-1], ''),
-          // 'Time': datetime[datetime.length - 1],
           'date': date.toDateString(),
           'time': date.toLocaleTimeString(),
+          // 'time': date,
+          // 'datetime': date,
           'temp': row[results.meta.fields[1]].split(',')[0],
           'id': results.data.length - idx
         });
