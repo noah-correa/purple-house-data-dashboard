@@ -15,9 +15,9 @@ const DataGraph = ({ data }) => {
   return (
     <ResponsiveContainer width='100%' height={400}>
       <LineChart data={data.data}>
-        <Line type='natural' dataKey='Temperature'/>
+        <Line type='natural' dataKey='temp'/>
         <CartesianGrid stroke='#ccc' strokeDasharray="10 5"/>
-        <XAxis dataKey={data.meta.fields[1]}>
+        <XAxis dataKey='datetime'>
           <Label value='Date' offset={0} position='bottom'/>
         </XAxis>
         <YAxis type='number' domain={[25, 35]}>
@@ -25,7 +25,7 @@ const DataGraph = ({ data }) => {
         </YAxis>
         <ReferenceLine y={32} label='Max Temp' stroke='red'/>
         <Tooltip/>
-        <Brush dataKey={data.meta.fields[0]} height={30} stroke="#8884d8"/>
+        <Brush dataKey='temp' height={30} stroke="#8884d8"/>
       </LineChart>
     </ResponsiveContainer>
   );

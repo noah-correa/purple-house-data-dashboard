@@ -29,10 +29,9 @@ const FileForm = ({ setData }) => {
       results.data.forEach((row, idx) => {
         const date = new Date(row[results.meta.fields[0]]);
         data.push({
+          'datetime': date.toLocaleString(),
           'date': date.toDateString(),
           'time': date.toLocaleTimeString(),
-          // 'time': date,
-          // 'datetime': date,
           'temp': row[results.meta.fields[1]].split(',')[0],
           'id': results.data.length - idx
         });
