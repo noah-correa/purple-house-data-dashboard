@@ -26,16 +26,19 @@ const FileForm = ({ setData }) => {
   const parseCSVFile = (file) => {
     const onComplete = (results) => {
       // console.log(results);
-      const data = [];
+      let data = [];
       results.data.forEach((row, idx) => {
         const date = new Date(row[results.meta.fields[0]]);
-        data.push({
-          'datetime': date.toLocaleString(),
-          'date': date.toDateString(),
-          'time': date.toLocaleTimeString(),
-          'temp': row[results.meta.fields[1]].split(',')[0],
-          'id': results.data.length - idx
-        });
+        data = [
+          {
+            'datetime': date,
+            'date': date.toDateString(),
+            'time': date.toLocaleTimeString(),
+            'temp': +row[results.meta.fields[1]].split(',')[0],
+            'id': results.data.length - idx
+          },
+          ...data
+        ];
       });
       results.data = data;
       results.meta.name = results.meta.fields[1];

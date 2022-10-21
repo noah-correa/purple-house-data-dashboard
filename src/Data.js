@@ -5,8 +5,8 @@ class Data {
     this.fields = this.empty ? undefined : results.meta.fields;
     this.data = this.empty ? undefined : results.data;
 
-    this.today = this.empty ? undefined : (new Date()).toLocaleDateString();
-    this.lastDay = this.empty ? undefined : this.lastDay();
+    this.today = this.empty ? undefined : (new Date()).toDateString();
+    this.lastDay = this.empty ? undefined : this.findLastDay();
     this.stats = this.empty ? undefined : {
       today: this.statsToday(),
       week: this.statsWeek(),
@@ -14,12 +14,29 @@ class Data {
     };
   }
 
-  lastDay() {
-    return new Date(this.data[0].date).toLocaleDateString();
+  findLastDay() {
+    return this.data[this.data.length-1].datetime.toDateString();
   }
 
   statsToday() {
-    // TODO
+    if (this.today !== this.lastDay) return {};
+    const data = this.data.filter(d => d.datetime.toDateString() === this.today);
+
+    const min = data.reduce((prev, curr) => {
+      return prev.temp < curr.temp ? prev : curr;
+    }, { temp: Number.MAX_SAFE_INTEGER });
+    
+    const max = data.reduce((prev, curr) => {
+      return prev.temp > curr.temp ? prev : curr;
+    }, { temp: Number.MIN_SAFE_INTEGER });
+
+    const avg = data.reduce((total, d) => {
+      return total + d.temp;
+    }, 0) / data.length;
+
+    const last = data[data.length-1];
+
+    return { data, min, max, avg, last };
   }
   
   statsWeek() {
