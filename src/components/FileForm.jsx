@@ -5,6 +5,7 @@ import Input from '@mui/material/Input';
 import Papa from 'papaparse';
 import { useRef, useState } from 'react';
 
+import Data from '../Data';
 import styles from '../styles/styles.module.css';
 
 const FileForm = ({ setData }) => {
@@ -38,9 +39,9 @@ const FileForm = ({ setData }) => {
       });
       results.data = data;
       results.meta.name = results.meta.fields[1];
-      results.meta.timezone = results.meta.fields[0].split(' ')[1];
+      results.meta.timezone = results.meta.fields[0].replace('Date (', '').replace(')', '');
       results.meta.fields = ['Date', 'Time', 'Temperature'];
-      setData(results);
+      setData(new Data(results));
     };
 
     const onError = (error) => {
