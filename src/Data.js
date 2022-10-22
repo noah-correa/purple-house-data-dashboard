@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 class Data {
   constructor(results) {
     this.empty = results?.data.length ? false : true;
@@ -5,8 +7,8 @@ class Data {
     this.fields = this.empty ? undefined : results.meta.fields;
     this.data = this.empty ? undefined : results.data;
 
-    this.today = this.empty ? undefined : (new Date()).toDateString();
-    this.lastDay = this.empty ? undefined : this.findLastDay();
+    this.today = this.empty ? undefined : moment();
+    // this.lastDay = this.empty ? undefined : this.findLastDay();
     this.stats = this.empty ? undefined : {
       today: this.statsToday(),
       week: this.statsWeek(),
@@ -14,14 +16,11 @@ class Data {
     };
   }
 
-  findLastDay() {
-    return this.data[this.data.length-1].datetime.toDateString();
-  }
+  // findLastDay() {
+  //   return moment(this.data[this.data.length-1].date);
+  // }
 
-  statsToday() {
-    if (this.today !== this.lastDay) return {};
-    const data = this.data.filter(d => d.datetime.toDateString() === this.today);
-
+  _calcStats(data) {
     const min = data.reduce((prev, curr) => {
       return prev.temp < curr.temp ? prev : curr;
     }, { temp: Number.MAX_SAFE_INTEGER });
@@ -38,13 +37,23 @@ class Data {
 
     return { data, min, max, avg, last };
   }
+
+  statsToday() {
+    const data = this.data.filter(d => moment(d.datetime).isSame(this.today, 'day'));
+    if (!data.length) return {};
+    return this._calcStats(data);
+  }
   
   statsWeek() {
-    // TODO
+    const data = this.data.filter(d => moment(d.datetime).isSame(this.today, 'week'));
+    if (!data.length) return {};
+    return this._calcStats(data);
   }
 
   statsMonth() {
-    // TODO
+    const data = this.data.filter(d => moment(d.datetime).isSame(this.today, 'month'));
+    if (!data.length) return {};
+    return this._calcStats(data);
   }
 
 
