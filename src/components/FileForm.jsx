@@ -5,6 +5,7 @@ import Input from '@mui/material/Input';
 import Papa from 'papaparse';
 import { useRef, useState } from 'react';
 
+import Data from '../Data';
 import styles from '../styles/styles.module.css';
 
 const FileForm = ({ setData }) => {
@@ -25,22 +26,25 @@ const FileForm = ({ setData }) => {
   const parseCSVFile = (file) => {
     const onComplete = (results) => {
       // console.log(results);
-      const data = [];
+      let data = [];
       results.data.forEach((row, idx) => {
         const date = new Date(row[results.meta.fields[0]]);
-        data.push({
-          'datetime': date.toLocaleString(),
-          'date': date.toDateString(),
-          'time': date.toLocaleTimeString(),
-          'temp': row[results.meta.fields[1]].split(',')[0],
-          'id': results.data.length - idx
-        });
+        data = [
+          {
+            'datetime': date,
+            'date': date.toDateString(),
+            'time': date.toLocaleTimeString(),
+            'temp': +row[results.meta.fields[1]].split(',')[0],
+            'id': results.data.length - idx
+          },
+          ...data
+        ];
       });
       results.data = data;
       results.meta.name = results.meta.fields[1];
-      results.meta.timezone = results.meta.fields[0].split(' ')[1];
+      results.meta.timezone = results.meta.fields[0].replace('Date (', '').replace(')', '');
       results.meta.fields = ['Date', 'Time', 'Temperature'];
-      setData(results);
+      setData(new Data(results));
     };
 
     const onError = (error) => {

@@ -8,14 +8,16 @@ import { useState } from 'react';
 
 import ContentCard from '../components/ContentCard';
 import ContentWrapper from '../components/ContentWrapper';
+import Dashboard from '../components/Dashboard';
 import DataGraph from '../components/DataGraph';
 import DataTable from '../components/DataTable';
 import FileForm from '../components/FileForm';
+import Data from '../Data';
 import styles from '../styles/styles.module.css';
 
 const Home = () => {
-  const [data, setData] = useState({});
-  const [display, setDisplay] = useState('table');
+  const [data, setData] = useState(new Data());
+  const [display, setDisplay] = useState('');
 
   const handleDisplay = (event, newDisplay) => {
     event.preventDefault();
@@ -23,13 +25,24 @@ const Home = () => {
   };
 
   const resetCSV = () => {
-    setData({});
-    setDisplay('table');
+    setData(new Data());
+    setDisplay('');
+  };
+
+  const renderMainContent = (disp, data) => {
+    switch(disp) {
+    case 'table':
+      return <DataTable data={data}/>;
+    case 'graph':
+      return <DataGraph data={data}/>;
+    default:
+      return <Dashboard data={data}/>;
+    }
   };
 
   return (
     <>
-      { !Object.keys(data).length ?
+      { data.empty ?
         <ContentWrapper center>
           <ContentCard className={styles.verticalcontainer}>
             <Typography variant='h4' sx={{textAlign: 'center'}} mb={4}>Purple House Data Dashboard</Typography>
@@ -42,22 +55,16 @@ const Home = () => {
             Load a new CSV file
           </Button>
           <Divider>
-            <Chip label={`Sensor: ${data.meta.name}`} />
+            <Chip label={`Sensor: ${data.name}`} />
           </Divider>
           <ToggleButtonGroup exclusive fullWidth value={display} onChange={handleDisplay}>
+            <ToggleButton value=''>Dashboard</ToggleButton>
             <ToggleButton value='table'>Table</ToggleButton>
             <ToggleButton value='graph'>Graph</ToggleButton>
           </ToggleButtonGroup>
-          { display === 'table' &&
-            <ContentCard>
-              <DataTable data={data} />
-            </ContentCard>
-          }
-          { display === 'graph' &&
-            <ContentCard>
-              <DataGraph data={data}/>
-            </ContentCard>
-          }
+          <ContentCard>
+            { renderMainContent(display, data) }
+          </ContentCard>
         </ContentWrapper>
       }
     </>
