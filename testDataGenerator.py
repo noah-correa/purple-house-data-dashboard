@@ -11,7 +11,6 @@ parser.add_argument('period', choices=period_choices, help='Time period (day, mo
 args = parser.parse_args()
 
 period = args.period
-print(period)
 days = 0
 if period == 'day':
 	days = 0

@@ -2,6 +2,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
+import moment from 'moment';
 import Papa from 'papaparse';
 import { useRef, useState } from 'react';
 
@@ -34,6 +35,7 @@ const FileForm = ({ setData }) => {
             'datetime': date,
             'date': date.toDateString(),
             'time': date.toLocaleTimeString(),
+            'string': moment(date).format('D/MM/YY, HH:mm'),
             'temp': +row[results.meta.fields[1]].split(',')[0],
             'id': results.data.length - idx
           },
