@@ -54,7 +54,7 @@ Simple React web application which allows a user to upload a CSV file containing
 ### Usage
 Launch the application with
 ```sh
-npm start
+npm run dev
 ```
 Refer to <a href="#react-app-instructions">React App Instructions</a> for further details on running the application.
 
