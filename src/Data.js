@@ -59,7 +59,11 @@ class Data {
     return data;
   }
 
-
+  getDataFromDate(date) {
+    const data = this.data.filter(d => moment(d.datetime).isSame(moment(date, 'YYYY-MM-DD'), 'day'));
+    if (!data.length) return {};
+    return data;
+  }
 }
 
 export default Data;

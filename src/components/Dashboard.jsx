@@ -1,5 +1,8 @@
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import moment from 'moment';
+import { useState } from 'react';
 
 import DataGraph from './DataGraph';
 
@@ -16,7 +19,7 @@ const StatsItem = styled('li')`
 `;
 
 
-const StatsHeader = styled('div')`
+const SplitHeader = styled('div')`
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -24,15 +27,17 @@ const StatsHeader = styled('div')`
 `;
 
 const Dashboard = ({ data }) => {
+  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
+
   const renderStats = (stats, label='') => {
     return (
       <Box>
-        <StatsHeader>
+        <SplitHeader>
           <h3>{label}:</h3>
           { Object.keys(stats).length > 0 &&
             <div>({stats.data.length} data points)</div>
           }
-        </StatsHeader>
+        </SplitHeader>
         { Object.keys(stats).length > 0 ?
           <StatsBox>
             <StatsItem>Current: {stats.last.temp} °C</StatsItem>
@@ -47,11 +52,20 @@ const Dashboard = ({ data }) => {
     );
   };
 
-
   return (
     <>
       <Box>
-        <h3>Last 24 Hours</h3>
+        <SplitHeader>
+          <h3>Last 24 Hours</h3>
+          <TextField
+            id="date"
+            label="Date"
+            type="date"
+            defaultValue={date}
+            sx={{ width: 160 }}
+            onChange={e => setDate(e.target.value)}
+          />
+        </SplitHeader>
         <DataGraph data={data.dataLast24Hours()}/>
       </Box>
       <hr/>

@@ -9,7 +9,7 @@ import { useRef, useState } from 'react';
 import Data from '../Data';
 import styles from '../styles/styles.module.css';
 
-const FileForm = ({ setData }) => {
+const FileForm = ({ onSubmit }) => {
   const fileRef = useRef(null);
   const [error, setError] = useState('');
 
@@ -46,7 +46,7 @@ const FileForm = ({ setData }) => {
       results.meta.name = results.meta.fields[1];
       results.meta.timezone = results.meta.fields[0].replace('Date (', '').replace(')', '');
       results.meta.fields = ['Date', 'Time', 'Temperature'];
-      setData(new Data(results));
+      onSubmit(new Data(results));
     };
 
     const onError = (error) => {

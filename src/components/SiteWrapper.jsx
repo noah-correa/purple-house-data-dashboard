@@ -9,7 +9,7 @@ const BodyWrapper = styled.div`
     flex-direction: column;
     background-color: ${ props => props.theme.background };
     color: ${ props => props.theme.text };
-    min-height: 100vh;
+    min-height: calc(100vh - 64px);
 `;
 
 const SiteWrapper = ({ children }) => {
