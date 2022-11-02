@@ -45,7 +45,7 @@ const Home = () => {
       { data.empty ?
         <ContentWrapper center>
           <ContentCard className={styles.verticalcontainer}>
-            <Typography variant='h4' sx={{textAlign: 'center'}} mb={4}>Purple House Data Dashboard</Typography>
+            <Typography variant='h4' sx={{textAlign: 'center'}} mb={4}>Purple House Data</Typography>
             <FileForm setData={setData}/>
           </ContentCard>
         </ContentWrapper>

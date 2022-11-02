@@ -12,7 +12,7 @@ const StatsBox = styled('ul')`
 `;
 
 const StatsItem = styled('li')`
-  width: 40%;
+  width: 35%;
 `;
 
 
@@ -29,19 +29,19 @@ const Dashboard = ({ data }) => {
       <Box>
         <StatsHeader>
           <h3>{label}:</h3>
-          { Object.keys(stats).length &&
-            <div>({data.stats.today.data.length} data points)</div>
+          { Object.keys(stats).length > 0 &&
+            <div>({stats.data.length} data points)</div>
           }
         </StatsHeader>
-        { !Object.keys(stats).length ?
-          <div>No data available for {label.toLowerCase()}</div>
-          :
+        { Object.keys(stats).length > 0 ?
           <StatsBox>
             <StatsItem>Current: {stats.last.temp} °C</StatsItem>
             <StatsItem>Minimum: {stats.min.temp} °C</StatsItem>
             <StatsItem>Average: {stats.avg} °C</StatsItem>
             <StatsItem>Maximum: {stats.max.temp} °C</StatsItem>
           </StatsBox>
+          :
+          <div>No data available</div>
         }
       </Box>
     );
@@ -51,7 +51,8 @@ const Dashboard = ({ data }) => {
   return (
     <>
       <Box>
-        <DataGraph data={data}/>
+        <h3>Last 24 Hours</h3>
+        <DataGraph data={data.dataLast24Hours()}/>
       </Box>
       <hr/>
       { renderStats(data.stats.today, 'Today') }
