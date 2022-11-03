@@ -4,3 +4,17 @@
   width: 100%;
   align-items: center;
 }
+
+.verticalcontainer > *:first-child {
+  margin-top: 1rem;
+}
+.verticalcontainer > *:not(:last-child) {
+  margin-bottom: calc(1rem * 0.5);
+}
+.verticalcontainer > *:last-child {
+  margin-bottom: 1rem;
+}
+
+.flex {
+  display: flex;
+}

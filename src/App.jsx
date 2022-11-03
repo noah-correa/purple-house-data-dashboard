@@ -8,16 +8,20 @@ import Data from './Data';
 import Home from './pages/Home';
 import darkTheme from './styles/themes/darkTheme';
 
-// import Router from './Router';
 const App = () => {
   const [display, setDisplay] = useState('');
   const [data, setData] = useState(new Data());
+
+  const newFile = () => {
+    setData(new Data());
+    setDisplay('');
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline/>
       <SiteWrapper>
-        <Header display={display} setDisplay={setDisplay} data={data}/>
+        <Header display={display} setDisplay={setDisplay} data={data} newFile={newFile}/>
         <Home display={display} setDisplay={setDisplay} data={data} setData={setData}/>
       </SiteWrapper>
     </ThemeProvider>

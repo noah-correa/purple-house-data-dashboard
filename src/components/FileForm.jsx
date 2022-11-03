@@ -1,4 +1,5 @@
 import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
@@ -28,25 +29,30 @@ const FileForm = ({ onSubmit }) => {
     const onComplete = (results) => {
       // console.log(results);
       let data = [];
-      results.data.forEach((row, idx) => {
-        const date = new Date(row[results.meta.fields[0]]);
-        data = [
-          {
-            'datetime': date,
-            'date': date.toDateString(),
-            'time': date.toLocaleTimeString(),
-            'string': moment(date).format('D/MM/YY, HH:mm'),
-            'temp': +row[results.meta.fields[1]].split(',')[0],
-            'id': results.data.length - idx
-          },
-          ...data
-        ];
-      });
-      results.data = data;
-      results.meta.name = results.meta.fields[1];
-      results.meta.timezone = results.meta.fields[0].replace('Date (', '').replace(')', '');
-      results.meta.fields = ['Date', 'Time', 'Temperature'];
-      onSubmit(new Data(results));
+      try {
+        results.data.forEach((row, idx) => {
+          const date = new Date(row[results.meta.fields[0]]);
+          data = [
+            {
+              'datetime': date,
+              'date': date.toDateString(),
+              'time': date.toLocaleTimeString(),
+              'string': moment(date).format('D/MM/YY, HH:mm'),
+              'temp': +row[results.meta.fields[1]].split(',')[0],
+              'id': results.data.length - idx
+            },
+            ...data
+          ];
+        });
+        results.data = data;
+        results.meta.name = results.meta.fields[1];
+        results.meta.timezone = results.meta.fields[0].replace('Date (', '').replace(')', '');
+        results.meta.fields = ['Date', 'Time', 'Temperature'];
+        onSubmit(new Data(results));
+      } catch (e) {
+        setError(`Unable to read file.${'\n'} Make sure it is an AskSensors CSV file`);
+      }
+      
     };
 
     const onError = (error) => {
@@ -67,11 +73,13 @@ const FileForm = ({ onSubmit }) => {
   };
 
   return (
-    <FormControl className={styles.verticalcontainer}>
+    <FormControl>
       {/* <InputLabel htmlFor='csv-file-input'>Select CSV File</InputLabel> */}
-      <Input id='csv-file-input' type='file' inputRef={fileRef}></Input>
-      { error && <Alert severity='error'>{error}</Alert> }
-      <Button variant='secondary' type='button' onClick={handleSubmit}>Submit</Button>
+      <Box className={styles.verticalcontainer}>
+        <Input id='csv-file-input' type='file' inputRef={fileRef} required={true}/>
+        <Button variant='secondary' type='button' onClick={handleSubmit}>Submit</Button>
+        { error && <Alert severity='error'>{error}</Alert> }
+      </Box>
     </FormControl>
   );
 };

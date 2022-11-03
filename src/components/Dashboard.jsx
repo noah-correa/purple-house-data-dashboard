@@ -1,8 +1,5 @@
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import moment from 'moment';
-import { useState } from 'react';
 
 import DataGraph from './DataGraph';
 
@@ -27,7 +24,6 @@ const SplitHeader = styled('div')`
 `;
 
 const Dashboard = ({ data }) => {
-  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
 
   const renderStats = (stats, label='') => {
     return (
@@ -55,17 +51,7 @@ const Dashboard = ({ data }) => {
   return (
     <>
       <Box>
-        <SplitHeader>
-          <h3>Last 24 Hours</h3>
-          <TextField
-            id="date"
-            label="Date"
-            type="date"
-            defaultValue={date}
-            sx={{ width: 160 }}
-            onChange={e => setDate(e.target.value)}
-          />
-        </SplitHeader>
+        <h3>Last 24 Hours</h3>
         <DataGraph data={data.dataLast24Hours()}/>
       </Box>
       <hr/>

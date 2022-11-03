@@ -9,5 +9,8 @@ export default defineConfig({
     alias: {
       '@mui/styled-engine': '@mui/styled-engine-sc'
     }
+  },
+  server: {
+    port: 3000
   }
 })
