@@ -73,13 +73,12 @@ const FileForm = ({ onSubmit }) => {
   };
 
   return (
-    <FormControl>
-      {/* <InputLabel htmlFor='csv-file-input'>Select CSV File</InputLabel> */}
-      <Box className={styles.verticalcontainer}>
-        <Input id='csv-file-input' type='file' inputRef={fileRef} required={true}/>
-        <Button variant='secondary' type='button' onClick={handleSubmit}>Submit</Button>
-        { error && <Alert severity='error'>{error}</Alert> }
+    <FormControl sx={{ width: '100%' }} className={styles.verticalcontainer}>
+      <Box className={styles.splitbox}>
+        <Input id='csv-file-input' type='file' inputRef={fileRef} required={true} sx={{ width: '100%' }}/>
+        <Button variant='outlined' color='inherit' type='button' onClick={handleSubmit}>Submit</Button>
       </Box>
+      { error && <Alert severity='error'>{error}</Alert> }
     </FormControl>
   );
 };
