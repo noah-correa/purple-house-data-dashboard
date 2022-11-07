@@ -25,7 +25,7 @@ const SplitHeader = styled('div')`
   align-items: center;
 `;
 
-const Dashboard = ({ data }) => {
+const Dashboard = ({ data, maxTemp }) => {
   const data24Hours = data.dataLast24Hours();
 
   const renderStats = (stats, label='') => {
@@ -58,7 +58,7 @@ const Dashboard = ({ data }) => {
       <ContentCard>
         <h3>Last 24 Hours</h3>
         { data24Hours.length > 0 ?
-          <Graph data={data24Hours}/>
+          <Graph data={data24Hours} maxTemp={maxTemp}/>
           :
           <div>No data available</div>
         }

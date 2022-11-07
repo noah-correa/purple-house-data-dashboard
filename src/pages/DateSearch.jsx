@@ -9,7 +9,7 @@ import Graph from '../components/Graph';
 import Table from '../components/Table';
 import styles from '../styles/styles.module.css';
 
-const DateSearch = ({ data }) => {
+const DateSearch = ({ data, maxTemp }) => {
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
   const dateData = data.getDataFromDate(date);
   
@@ -32,10 +32,10 @@ const DateSearch = ({ data }) => {
       { dateData.length > 0 &&
         <>
           <ContentCard>
-            <Graph data={dateData}/>
+            <Graph data={dateData} maxTemp={maxTemp}/>
           </ContentCard>
           <ContentCard>
-            <Table data={dateData}/>
+            <Table data={dateData} maxTemp={maxTemp}/>
           </ContentCard>
         </>
       }

@@ -9,15 +9,14 @@ import FileForm from '../components/FileForm';
 import Dashboard from './Dashboard';
 import DateSearch from './DateSearch';
 
-const Home = ({ display, setDisplay, data, setData }) => {
-  
+const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
 
   const renderMainContent = (disp, data) => {
     switch(disp) {
     case 'dashboard':
-      return <Dashboard data={data}/>;
+      return <Dashboard data={data} maxTemp={maxTemp}/>;
     case 'datesearch':
-      return <DateSearch data={data}/>;
+      return <DateSearch data={data} maxTemp={maxTemp}/>;
     default:
       return;
     }

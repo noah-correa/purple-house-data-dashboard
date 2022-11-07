@@ -13,7 +13,7 @@ import SettingsModal from './SettingsModal';
 // import { styled } from '@mui/material/styles';
 
 
-const Header = ({ display, setDisplay, data, newFile }) => {
+const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -65,7 +65,7 @@ const Header = ({ display, setDisplay, data, newFile }) => {
             <IconButton onClick={() => setOpen(true)}>
               <SettingsIcon/>
             </IconButton>
-            <SettingsModal open={open} setOpen={setOpen}/>
+            <SettingsModal open={open} setOpen={setOpen} maxTemp={maxTemp} setMaxTemp={setMaxTemp}/>
           </Box>
         </Toolbar>
       </Container>

@@ -13,11 +13,11 @@ import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Too
 // `;
 
 
-const Graph = ({ data }) => {
+const Graph = ({ data, maxTemp }) => {
   const CustomLabel = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <Alert severity={payload[0].value >= 32 ? 'error' : 'info'}>
+        <Alert severity={payload[0].value >= maxTemp ? 'error' : 'info'}>
           <strong>{`${payload[0].value} ${payload[0].unit}`}</strong>
           <div>{payload[0].payload.date}</div>
           <div>{payload[0].payload.time}</div>
@@ -28,7 +28,7 @@ const Graph = ({ data }) => {
   };
 
   const WarningDot = ({ value, cx, cy }) => {
-    if (value >= 32) return (
+    if (value >= maxTemp) return (
 
       <svg x={cx - 4} y={cy - 4} width={8} height={8}>
         <g transform="translate(4 4)">
@@ -56,7 +56,7 @@ const Graph = ({ data }) => {
             <CartesianGrid stroke='#ccc' strokeDasharray="3 3" vertical={false}/>
             <XAxis dataKey='time'/>
             <YAxis type='number' domain={['dataMin-1', 'dataMax+1']} unit='°C' interval={0}/>
-            <ReferenceLine y={32} stroke='red' strokeDasharray='9 3'/>
+            <ReferenceLine y={maxTemp} stroke='red' strokeDasharray='9 3'/>
             <Tooltip content={<CustomLabel/>}/>
           </LineChart>
         </ResponsiveContainer>

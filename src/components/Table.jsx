@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
-const Table = ({ data }) => {
+const Table = ({ data, maxTemp }) => {
   const columns = [
     {
       field: 'date',
@@ -35,7 +35,7 @@ const Table = ({ data }) => {
             rows={data}
             columns={columns}
             rowsPerPageOptions={[100]}
-            getRowClassName = {params => params.row.temp >= 32 ? 'highlight' : ''}
+            getRowClassName = {params => params.row.temp >= maxTemp ? 'highlight' : ''}
             initialState={{
               sorting: {
                 sortModel: [{field: 'id', sort: 'asc'}]   // No multiple field sorting with free (community) version

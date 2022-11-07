@@ -7,14 +7,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 
-import { getMaxTemp, setMaxTemp } from '../storage';
 
 
-const SettingsModal = ({ open, setOpen }) => {
-  const [temp, setTemp] = useState(Number.parseFloat(getMaxTemp()));
+const SettingsModal = ({ open, setOpen, maxTemp, setMaxTemp }) => { 
+  const [modalTemp, setModalTemp] = useState(maxTemp);
   
   const handleSave = () => {
-    setMaxTemp(Number.parseFloat(temp));
+    setMaxTemp(Number.parseFloat(modalTemp));
   };
 
   return (
@@ -34,8 +33,8 @@ const SettingsModal = ({ open, setOpen }) => {
             }
           }}
           label='Max Temp'
-          value={temp}
-          onChange={(e) => setTemp(Number.parseFloat(e.target.value))}
+          value={modalTemp}
+          onChange={(e) => setModalTemp(Number.parseFloat(e.target.value))}
         />
       </DialogContent>
       <DialogActions>
