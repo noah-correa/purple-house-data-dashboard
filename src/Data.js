@@ -29,10 +29,10 @@ class Data {
       return total + d.temp;
     }, 0) / data.length).toFixed(2);
 
-    const last = data[data.length-1];
-    last.temp = +(last.temp).toFixed(2);
+    // const last = data[data.length-1];
+    // last.temp = +(last.temp).toFixed(2);
 
-    return { data, min, max, avg, last };
+    return { data, min, max, avg };
   }
 
   statsToday() {
@@ -55,13 +55,13 @@ class Data {
 
   dataLast24Hours() {
     const data = this.data.filter(d => moment(d.datetime).isSameOrAfter(moment().subtract(24, 'hours')));
-    if (!data.length) return {};
+    if (!data.length) return [];
     return data;
   }
 
   getDataFromDate(date) {
     const data = this.data.filter(d => moment(d.datetime).isSame(moment(date, 'YYYY-MM-DD'), 'day'));
-    if (!data.length) return {};
+    if (!data.length) return [];
     return data;
   }
 }

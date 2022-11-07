@@ -27,7 +27,6 @@ const FileForm = ({ onSubmit }) => {
 
   const parseCSVFile = (file) => {
     const onComplete = (results) => {
-      // console.log(results);
       let data = [];
       try {
         results.data.forEach((row, idx) => {
@@ -36,8 +35,7 @@ const FileForm = ({ onSubmit }) => {
             {
               'datetime': date,
               'date': date.toDateString(),
-              'time': date.toLocaleTimeString(),
-              'string': moment(date).format('D/MM/YY, HH:mm'),
+              'time': moment(date).format('h:mm A'),
               'temp': +row[results.meta.fields[1]].split(',')[0],
               'id': results.data.length - idx
             },
@@ -76,10 +74,11 @@ const FileForm = ({ onSubmit }) => {
     <FormControl sx={{ width: '100%' }} className={styles.verticalcontainer}>
       <Box className={styles.splitbox}>
         <Input id='csv-file-input' type='file' inputRef={fileRef} required={true} sx={{ width: '100%' }}/>
-        <Button variant='outlined' color='inherit' type='button' onClick={handleSubmit}>Submit</Button>
+        <Button variant='outlined' color='inherit' type='button' onClick={handleSubmit} sx={{ ml: 2 }}>Submit</Button>
       </Box>
       { error && <Alert severity='error'>{error}</Alert> }
     </FormControl>
   );
 };
+
 export default FileForm;
