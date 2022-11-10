@@ -43,9 +43,9 @@ const Table = ({ data, maxTemp }) => {
             }}
             sx={{
               '.highlight': {
-                color: '#B00020',
+                color: '#d32f2f',
                 '&:hover': {
-                  color: '#CF6679'
+                  color: '#e57373'
                 }
               }
             }}

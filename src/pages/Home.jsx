@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import ContentCard from '../components/ContentCard';
 import ContentWrapper from '../components/ContentWrapper';
 import FileForm from '../components/FileForm';
+import styles from '../styles/styles.module.css';
 import Dashboard from './Dashboard';
 import DateSearch from './DateSearch';
 
@@ -30,7 +31,7 @@ const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
   if (data.empty) return (
     <ContentWrapper center>
       <ContentCard>
-        <Box>
+        <Box className={styles.verticalcontainer} sx={{ width: '100%' }}>
           <Typography align='center' variant='h5' sx={{ pb: 1 }}>AskSensors CSV File Upload</Typography>
           <FileForm onSubmit={handleSubmit}/>
         </Box>
@@ -41,11 +42,9 @@ const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
   return (
     <ContentWrapper>
       <Divider>
-        <Chip label={`Sensor: ${data.name}`} />
+        <Chip label={`Sensor: ${data.name}`} color='secondary'/>
       </Divider>
-      {/* <ContentCard> */}
       { renderMainContent(display, data) }
-      {/* </ContentCard> */}
     </ContentWrapper>
   );
 };

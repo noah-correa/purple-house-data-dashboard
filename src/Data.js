@@ -1,20 +1,34 @@
 import moment from 'moment';
 
+const average = (data) => {
+  return +(data.reduce((total, d) => {
+    return total + d.temp;
+  }, 0) / data.length).toFixed(2);
+};
+
+const dataFromSameDay = (data, day) => {
+  return data.filter(d => moment(d.datetime).isSame(day, 'day'));
+};
+
+const dataFromSameMonth = (data, month) => {
+  return data.filter(d => moment(d.datetime).isSame(month, 'month'));
+};
+
 class Data {
   constructor(results) {
     this.empty = results?.data.length ? false : true;
     this.name = this.empty ? undefined : results.meta.name;
     this.fields = this.empty ? undefined : results.meta.fields;
     this.data = this.empty ? undefined : results.data;
-  
-    this.stats = this.empty ? undefined : {
-      today: this.statsToday(),
-      week: this.statsWeek(),
-      month: this.statsMonth(),
-    };
+    this.statsToday = this.empty ? undefined : this.calcStatsToday();
+    this.dataLast24Hours = this.empty ? undefined : this.last24Hours();
+    this.dataWeek = this.empty ? undefined : this.calcDataWeek();
+    this.dataYear = this.empty ? undefined : this.calcDataYear();
   }
 
-  _calcStats(data) {
+  calcStatsToday() {
+    const data = this.data.filter(d => moment(d.datetime).isSame(moment(), 'day'));
+    if (!data.length) return [];
     const min = data.reduce((prev, curr) => {
       return prev.temp < curr.temp ? prev : curr;
     }, { temp: Number.MAX_SAFE_INTEGER });
@@ -29,31 +43,36 @@ class Data {
       return total + d.temp;
     }, 0) / data.length).toFixed(2);
 
-    // const last = data[data.length-1];
-    // last.temp = +(last.temp).toFixed(2);
-
     return { data, min, max, avg };
   }
-
-  statsToday() {
-    const data = this.data.filter(d => moment(d.datetime).isSame(moment(), 'day'));
-    if (!data.length) return {};
-    return this._calcStats(data);
-  }
   
-  statsWeek() {
-    const data = this.data.filter(d => moment(d.datetime).isSame(moment(), 'week'));
-    if (!data.length) return {};
-    return this._calcStats(data);
+  calcDataWeek() {
+    if (this.data.empty) return [];
+    const weekStart = moment().startOf('week');
+    const avgs = [];
+    for (let i = 0; i < 7; i++) {
+      const avgTemp = average(dataFromSameDay(this.data, weekStart.add(1, 'days')));
+      if (!isNaN(avgTemp)) {
+        avgs.push({ temp: avgTemp, time: weekStart.format('ddd') });
+      }
+    }
+    return avgs;
   }
 
-  statsMonth() {
-    const data = this.data.filter(d => moment(d.datetime).isSame(moment(), 'month'));
-    if (!data.length) return {};
-    return this._calcStats(data);
+  calcDataYear() {
+    if (this.data.empty) return [];
+    const yearStart = moment().startOf('year');
+    const avgs = [];
+    for (let i = 0; i < 12; i++) {
+      const avgTemp = average(dataFromSameMonth(this.data, yearStart.add(1, 'months')));
+      if (!isNaN(avgTemp)) {
+        avgs.push({ temp: avgTemp, time: yearStart.format('MMM') });
+      }
+    }
+    return avgs;
   }
 
-  dataLast24Hours() {
+  last24Hours() {
     const data = this.data.filter(d => moment(d.datetime).isSameOrAfter(moment().subtract(24, 'hours')));
     if (!data.length) return [];
     return data;

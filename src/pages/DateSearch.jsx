@@ -16,7 +16,7 @@ const DateSearch = ({ data, maxTemp }) => {
   return (
     <>
       <ContentCard>
-        <Box className={styles.splitbox} sx={{ mb: 2 }}>
+        <Box className={styles.splitbox}>
           <Typography variant="h5">Date Search</Typography>
           <TextField
             id="date"
@@ -25,9 +25,10 @@ const DateSearch = ({ data, maxTemp }) => {
             defaultValue={date}
             sx={{ width: 160 }}
             onChange={e => setDate(e.target.value)}
+            color='secondary'
           />
         </Box>
-        { dateData.length === 0 && <div>No data available</div> }
+        { dateData.length === 0 && <i>No data available</i> }
       </ContentCard>
       { dateData.length > 0 &&
         <>

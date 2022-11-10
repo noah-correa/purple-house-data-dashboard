@@ -20,4 +20,17 @@
 .splitbox {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.tempWarning {
+  color: #ffa726;
+}
+
+.tempError {
+  color: #f44336;
+}
+
+.linkActive {
+  color: #ce93d8;
 }

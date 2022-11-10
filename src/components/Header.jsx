@@ -4,14 +4,22 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import SettingsModal from './SettingsModal';
 
-// import { styled } from '@mui/material/styles';
-
+const NavButton = styled(Button)(() => ({
+  color: 'white',
+  '&:hover': {
+    color: '#ce93d8',
+  },
+  '&:disabled': {
+    color: '#ab47bc'
+  }
+}));
 
 const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => {
   const [open, setOpen] = useState(false);
@@ -31,38 +39,51 @@ const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => 
           <Box sx={{ flexGrow: 1, ml: 2 }}>
             { !data.empty &&
               <>
-                <Button 
+                <NavButton 
                   variant="text"
                   color="inherit"
                   onClick={() => setDisplay('dashboard')}
+                  disableRipple
                   disabled={display === 'dashboard'}
                 >
                   Dashboard
-                </Button>
-                <Button 
+                </NavButton>
+                <NavButton 
                   variant="text"
                   color="inherit"
                   onClick={() => setDisplay('datesearch')}
+                  disableRipple
                   disabled={display === 'datesearch'}
                 >
                   View by Date
-                </Button>
+                </NavButton>
               </>
             }
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' }}}>
             { display !== '' &&
-                <Button 
+                <NavButton 
                   variant="text"
                   color="inherit"
                   onClick={() => newFile()}
                   disabled={display === ''}
                 >
                   New File
-                </Button>
+                </NavButton>
             }
-            <IconButton onClick={() => setOpen(true)}>
+            <IconButton
+              onClick={() => setOpen(true)}
+              sx={{
+                color: 'white',
+                '&:hover': {
+                  color: '#ce93d8',
+                },
+                '&:disabled': {
+                  color: '#ab47bc'
+                }
+              }}
+            >
               <SettingsIcon/>
             </IconButton>
             <SettingsModal open={open} setOpen={setOpen} maxTemp={maxTemp} setMaxTemp={setMaxTemp}/>

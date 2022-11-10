@@ -14,6 +14,7 @@ const SettingsModal = ({ open, setOpen, maxTemp, setMaxTemp }) => {
   
   const handleSave = () => {
     setMaxTemp(Number.parseFloat(modalTemp));
+    setOpen(false);
   };
 
   return (
@@ -23,7 +24,7 @@ const SettingsModal = ({ open, setOpen, maxTemp, setMaxTemp }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Update the maximum temperature settings. Default 32°C
+          Update the maximum temperature.
         </DialogContentText>
         <TextField 
           type="number"
@@ -35,12 +36,16 @@ const SettingsModal = ({ open, setOpen, maxTemp, setMaxTemp }) => {
           label='Max Temp'
           value={modalTemp}
           onChange={(e) => setModalTemp(Number.parseFloat(e.target.value))}
+          sx={{ mt: 2, width: '100%' }}
         />
       </DialogContent>
       <DialogActions>
-        <Button color="inherit" onClick={handleSave}>
+        <Button variant='outlined' color='success' onClick={handleSave}>
           Save
         </Button>
+        <Button variant='outlined' color='error' onClick={() => setOpen(false)}>
+          Close
+        </Button> 
       </DialogActions>
     </Dialog>
   );

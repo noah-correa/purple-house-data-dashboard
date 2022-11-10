@@ -21,8 +21,10 @@ const App = () => {
   }, [maxTemp]);
 
   const newFile = () => {
-    setData(new Data());
-    setDisplay('');
+    if (confirm('Are you sure?')) {
+      setData(new Data());
+      setDisplay('');
+    }
   };
 
   return (
