@@ -4,10 +4,10 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
-import moment from 'moment';
 import Papa from 'papaparse';
 import { useRef, useState } from 'react';
 
+import CSVParser from '../CSVParser';
 import Data from '../Data';
 import styles from '../styles/styles.module.css';
 
@@ -29,27 +29,10 @@ const FileForm = ({ onSubmit }) => {
 
   const parseCSVFile = (file) => {
     const onComplete = (results) => {
-      let data = [];
       try {
-        results.data.forEach((row, idx) => {
-          const date = new Date(row[results.meta.fields[0]]);
-          data = [
-            {
-              'datetime': date,
-              'date': date.toDateString(),
-              'time': moment(date).format('h:mm A'),
-              'temp': +row[results.meta.fields[1]].split(',')[0],
-              'id': results.data.length - idx
-            },
-            ...data
-          ];
-        });
-        results.data = data;
-        results.meta.name = results.meta.fields[1];
-        results.meta.timezone = results.meta.fields[0].replace('Date (', '').replace(')', '');
-        results.meta.fields = ['Date', 'Time', 'Temperature'];
+        const newResults = CSVParser.parseAskSensors(results);
         setLoading(false);
-        onSubmit(new Data(results));
+        onSubmit(new Data(newResults));
       } catch (e) {
         console.error(e);
         setLoading(false);
