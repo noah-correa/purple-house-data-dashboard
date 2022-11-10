@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const PageContent = styled.main`
+export const PageContent = styled('main')`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@ export const PageContent = styled.main`
   }
 `;
 
-export const CenterPageContent = styled.main`
+export const CenterPageContent = styled('main')`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
