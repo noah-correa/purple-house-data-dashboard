@@ -51,10 +51,11 @@ class Data {
     const weekStart = moment().startOf('week');
     const avgs = [];
     for (let i = 0; i < 7; i++) {
-      const avgTemp = average(dataFromSameDay(this.data, weekStart.add(1, 'days')));
+      const avgTemp = average(dataFromSameDay(this.data, weekStart));
       if (!isNaN(avgTemp)) {
         avgs.push({ temp: avgTemp, time: weekStart.format('ddd') });
       }
+      weekStart.add(1, 'days');
     }
     return avgs;
   }
@@ -64,10 +65,11 @@ class Data {
     const yearStart = moment().startOf('year');
     const avgs = [];
     for (let i = 0; i < 12; i++) {
-      const avgTemp = average(dataFromSameMonth(this.data, yearStart.add(1, 'months')));
+      const avgTemp = average(dataFromSameMonth(this.data, yearStart));
       if (!isNaN(avgTemp)) {
         avgs.push({ temp: avgTemp, time: yearStart.format('MMM') });
       }
+      yearStart.add(1, 'months');
     }
     return avgs;
   }
