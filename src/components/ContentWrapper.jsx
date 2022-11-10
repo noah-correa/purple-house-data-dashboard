@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-export const PageContent = styled.main`
-  /* flex-grow: 1; */
+export const PageContent = styled('main')`
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,15 +20,15 @@ export const PageContent = styled.main`
   }
 `;
 
-export const CenterPageContent = styled.main`
+export const CenterPageContent = styled('main')`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   & > * {
-    width: 85%;
-    max-width: 900px;
+    width: 50%;
+    max-width: 700px;
   };
 `;
 

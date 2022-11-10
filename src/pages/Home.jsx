@@ -1,73 +1,52 @@
-import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
 
 import ContentCard from '../components/ContentCard';
 import ContentWrapper from '../components/ContentWrapper';
-import Dashboard from '../components/Dashboard';
-import DataGraph from '../components/DataGraph';
-import DataTable from '../components/DataTable';
 import FileForm from '../components/FileForm';
-import Data from '../Data';
 import styles from '../styles/styles.module.css';
+import Dashboard from './Dashboard';
+import DateSearch from './DateSearch';
 
-const Home = () => {
-  const [data, setData] = useState(new Data());
-  const [display, setDisplay] = useState('');
-
-  const handleDisplay = (event, newDisplay) => {
-    event.preventDefault();
-    setDisplay(newDisplay);
-  };
-
-  const resetCSV = () => {
-    setData(new Data());
-    setDisplay('');
-  };
+const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
 
   const renderMainContent = (disp, data) => {
     switch(disp) {
-    case 'table':
-      return <DataTable data={data}/>;
-    case 'graph':
-      return <DataGraph data={data}/>;
+    case 'dashboard':
+      return <Dashboard data={data} maxTemp={maxTemp}/>;
+    case 'datesearch':
+      return <DateSearch data={data} maxTemp={maxTemp}/>;
     default:
-      return <Dashboard data={data}/>;
+      return;
     }
   };
 
+  const handleSubmit = (data) => {
+    setData(data);
+    setDisplay('dashboard');
+  };
+
+  if (data.empty) return (
+    <ContentWrapper center>
+      <ContentCard>
+        <Box className={styles.verticalcontainer} sx={{ width: '100%' }}>
+          <Typography align='center' variant='h5' sx={{ pb: 1 }}>AskSensors CSV File Upload</Typography>
+          <FileForm onSubmit={handleSubmit}/>
+        </Box>
+      </ContentCard>
+    </ContentWrapper>
+  );
+
   return (
-    <>
-      { data.empty ?
-        <ContentWrapper center>
-          <ContentCard className={styles.verticalcontainer}>
-            <Typography variant='h4' sx={{textAlign: 'center'}} mb={4}>Purple House Data Dashboard</Typography>
-            <FileForm setData={setData}/>
-          </ContentCard>
-        </ContentWrapper>
-        :
-        <ContentWrapper>
-          <Button variant="outlined" onClick={() => resetCSV()}>
-            Load a new CSV file
-          </Button>
-          <Divider>
-            <Chip label={`Sensor: ${data.name}`} />
-          </Divider>
-          <ToggleButtonGroup exclusive fullWidth value={display} onChange={handleDisplay}>
-            <ToggleButton value=''>Dashboard</ToggleButton>
-            <ToggleButton value='table'>Table</ToggleButton>
-            <ToggleButton value='graph'>Graph</ToggleButton>
-          </ToggleButtonGroup>
-          <ContentCard>
-            { renderMainContent(display, data) }
-          </ContentCard>
-        </ContentWrapper>
-      }
-    </>
+    <ContentWrapper>
+      <Divider>
+        <Chip label={`Sensor: ${data.name}`} color='secondary'/>
+      </Divider>
+      { renderMainContent(display, data) }
+    </ContentWrapper>
   );
 };
+
 export default Home;
