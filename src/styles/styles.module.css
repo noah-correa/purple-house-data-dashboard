@@ -2,10 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-<<<<<<< HEAD
-  align-items: center;
-}
-=======
   flex-wrap: nowrap;
 }
 
@@ -32,4 +28,3 @@
 .tempError {
   color: #f44336;
 }
->>>>>>> vite-migration
