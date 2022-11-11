@@ -21,7 +21,7 @@ const NavButton = styled(Button)(() => ({
   }
 }));
 
-const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => {
+const Header = ({ display, setDisplay, allData, newFile, maxTemp, setMaxTemp }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,7 +37,7 @@ const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => 
             PURPLE HOUSE DATA
           </Typography>
           <Box sx={{ flexGrow: 1, ml: 2 }}>
-            { data.length > 0 &&
+            { allData.length > 0 &&
               <>
                 <NavButton 
                   variant="text"
@@ -62,7 +62,7 @@ const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => 
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' }}}>
-            { data.length > 0 &&
+            { allData.length > 0 &&
                 <NavButton 
                   variant="text"
                   color="inherit"

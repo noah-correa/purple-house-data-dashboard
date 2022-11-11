@@ -30,6 +30,8 @@ const FileForm = ({ onSubmit }) => {
     setLoading(true);
     if (!fileRef.current.files.length) {
       setError('No file selected');
+    } else if (fileRef.current.files.length > 4) {
+      setError('Too many files');
     } else {
       setError('');
       setNumFiles(fileRef.current.files.length);

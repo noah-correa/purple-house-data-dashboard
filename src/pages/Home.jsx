@@ -1,7 +1,9 @@
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
 import ContentCard from '../components/ContentCard';
 import ContentWrapper from '../components/ContentWrapper';
@@ -10,7 +12,17 @@ import styles from '../styles/styles.module.css';
 import Dashboard from './Dashboard';
 import DateSearch from './DateSearch';
 
-const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
+const DataSelectBox = styled('div')`
+  display: flex;
+  & > * {
+    flex-grow: 1;
+  }
+`;
+
+
+const Home = ({ display, setDisplay, allData, setAllData, maxTemp }) => {
+  const [selectedData, setSelectedData] = useState(0);
+  const data = allData[selectedData];
 
   const renderMainContent = (disp, data) => {
     switch(disp) {
@@ -23,12 +35,13 @@ const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
     }
   };
 
-  const handleSubmit = (data) => {
-    setData(data);
+  const handleSubmit = (newData) => {
+    setAllData(newData);
     setDisplay('dashboard');
+    setSelectedData(0);
   };
 
-  if (!data.length) return (
+  if (!allData.length) return (
     <ContentWrapper center>
       <ContentCard>
         <Box className={styles.verticalcontainer} sx={{ width: '100%' }}>
@@ -42,9 +55,15 @@ const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
 
   return (
     <ContentWrapper>
-      <Divider>
-        <Chip label={`Sensor: ${data.name}`} color='secondary'/>
-      </Divider>
+      <DataSelectBox>
+        { allData.map((d, idx) => (
+          <Box key={idx}>
+            <Divider light>
+              <Chip label={d.name} onClick={() => setSelectedData(idx)} color={idx === selectedData ? 'secondary' : 'default'}/>
+            </Divider>
+          </Box>
+        ))}
+      </DataSelectBox>
       { renderMainContent(display, data) }
     </ContentWrapper>
   );
