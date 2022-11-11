@@ -37,7 +37,7 @@ const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => 
             PURPLE HOUSE DATA
           </Typography>
           <Box sx={{ flexGrow: 1, ml: 2 }}>
-            { !data.empty &&
+            { data.length > 0 &&
               <>
                 <NavButton 
                   variant="text"
@@ -62,7 +62,7 @@ const Header = ({ display, setDisplay, data, newFile, maxTemp, setMaxTemp }) => 
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' }}}>
-            { display !== '' &&
+            { data.length > 0 &&
                 <NavButton 
                   variant="text"
                   color="inherit"

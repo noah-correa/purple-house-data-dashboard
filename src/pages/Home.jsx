@@ -28,11 +28,12 @@ const Home = ({ display, setDisplay, data, setData, maxTemp }) => {
     setDisplay('dashboard');
   };
 
-  if (data.empty) return (
+  if (!data.length) return (
     <ContentWrapper center>
       <ContentCard>
         <Box className={styles.verticalcontainer} sx={{ width: '100%' }}>
           <Typography align='center' variant='h5' sx={{ pb: 1 }}>AskSensors CSV File Upload</Typography>
+          <Typography align='center' color='silver'>Upload up to 4 AskSensors CSV files</Typography>
           <FileForm onSubmit={handleSubmit}/>
         </Box>
       </ContentCard>

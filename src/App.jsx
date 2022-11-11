@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import Header from './components/Header';
 import SiteWrapper from './components/SiteWrapper';
-import Data from './Data';
 import Home from './pages/Home';
 import darkTheme from './styles/themes/darkTheme';
 
@@ -13,7 +12,7 @@ const DEFAULT_MAX_TEMP = 32;
 
 const App = () => {
   const [display, setDisplay] = useState('');
-  const [data, setData] = useState(new Data());
+  const [data, setData] = useState([]);
   const [maxTemp, setMaxTemp] = useState(localStorage.getItem(MAX_TEMP_KEY) || DEFAULT_MAX_TEMP);
   
   useEffect(() => {
@@ -22,7 +21,7 @@ const App = () => {
 
   const newFile = () => {
     if (confirm('Are you sure?')) {
-      setData(new Data());
+      setData([]);
       setDisplay('');
     }
   };
